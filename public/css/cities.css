@@ -1,0 +1,38 @@
+#search {
+	padding-top: 5vmin;
+}
+#search button {
+	background-color: transparent;
+	border-color: #000 !important;
+	color: #000;
+	font-weight: bolder !important;
+	font-size: .75rem;
+}
+#search button:hover {
+	color: white;
+	background-color: #3b3a35;
+	-webkit-transition-duration: .25s;
+	-moz-transition-duration: .25s;
+	-ms-transition-duration: .25s;
+	-o-transition-duration: .25s;
+	transition-duration: .25s;
+}
+
+#cities {
+	margin: 5vmin 0 5vmin 0;
+}
+#cities button {
+	background: none;
+	border: none;
+}
+#cities button > a {
+	color: #000;
+	text-decoration: none;
+}
+#cities button > a:hover {
+	color: #000 !important;
+}
+
+#tabs {
+	margin-bottom: 7.5vmin;
+}

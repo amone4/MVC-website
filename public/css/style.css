@@ -1,0 +1,100 @@
+html {
+	font-size: 18px;
+	min-height: 100vh;
+}
+
+body {
+	background: url("../img/sample.jpg") no-repeat fixed;
+	background-size: cover;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	min-height: 100%;
+}
+
+nav {
+	color: white !important;
+	height: 10vmin !important;
+	background-color: #394759;
+	padding: 1vmin;
+	margin: 0;
+	line-height: 8vmin;
+}
+nav > div {
+	position: relative;
+}
+nav #brand {
+	font-family: 'Century Gothic', sans-serif;
+	color: white !important;
+	font-size: 1.75rem;
+	text-decoration: none;
+	-webkit-transition-duration: .5s;
+	-moz-transition-duration: .5s;
+	-ms-transition-duration: .5s;
+	-o-transition-duration: .5s;
+	transition-duration: .5s;
+	opacity: .9;
+}
+nav #brand:hover {
+	-webkit-transition-duration: .5s;
+	-moz-transition-duration: .5s;
+	-ms-transition-duration: .5s;
+	-o-transition-duration: .5s;
+	transition-duration: .5s;
+	opacity: 1;
+}
+nav #showOptions {
+	display: none;
+}
+nav #hideOptions {
+	display: none;
+}
+nav .optionsToggle {
+	cursor: pointer;
+	padding-left: 2.5vmin;
+}
+
+nav #options {
+	position: absolute;
+	top: 10vmin;
+	right: 0;
+	padding: 0;
+	z-index: 99;
+	display: none;
+	background-color: #394759;
+}
+nav #options table {
+	padding: 0;
+	margin: 0;
+}
+nav #options td {
+	padding: 0;
+	opacity: .9;
+}
+nav #options td:hover {
+	opacity: 1;
+}
+nav #options a {
+	color: white !important;
+	text-decoration: none !important;
+	display: block;
+}
+
+#container {
+	margin-top: 10vmin !important;
+	margin-bottom: 5vmin !important;
+}
+
+footer {
+	height: 5vmin !important;
+	background-color: #afbdc4;
+}
+footer a {
+	text-align: center;
+	font-size: small;
+	font-weight: bolder;
+	color: black;
+}
+footer a:hover {
+	color: black;
+}

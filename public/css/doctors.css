@@ -1,0 +1,38 @@
+#doctors {
+	margin-top: 15vmin;
+	margin-bottom: 10vmin;
+	font-family: 'Century Gothic', serif;
+	font-weight: bolder;
+}
+
+.doctor {
+	text-decoration: none;
+	color: #000;
+	margin-bottom: 5vmin;
+}
+
+.doctor:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+.doctor .card {
+	box-shadow: 5px 5px 5px grey;
+}
+
+.doctor:hover .card {
+	transition-duration: .5s;
+	box-shadow: 10px 10px 20px grey;
+}
+
+.doctor .card-body {
+	background-color: whitesmoke;
+}
+
+.doctor .card-body .card-title {
+	font-weight: bolder;
+}
+
+#tabs {
+	margin-bottom: 10vmin;
+}

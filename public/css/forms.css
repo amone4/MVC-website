@@ -1,0 +1,29 @@
+body > #container > .row {
+	margin: 20vmin 0 15vmin 0 !important;
+}
+
+body > #container > .row > div {
+	background: rgba(10,20,30,.85) !important;
+	box-shadow: 5px 5px 15px #394759 !important;
+	border: solid transparent;
+	border-radius: 10px;
+}
+
+body > #container > .row > div > h2 {
+	margin-top: 10vmin !important;
+	color: rgba(230,240,250,1) !important;
+}
+
+body > #container > .row > div .field {
+	margin-top: 1vmin !important;
+	margin-bottom: 1vmin !important;
+}
+
+body > #container > .row > div .field > label {
+	color: rgba(230,240,250,1) !important;
+}
+
+body > #container > .row > div .field > input:not([type="submit"]) {
+	background-color: rgba(250, 255, 210, 1) !important;
+	box-shadow: 1px 1px 15px #111923 !important;
+}
