@@ -6,8 +6,8 @@ The website searches through various doctors, based on their city and category.
 The website won't run without its database.
 Create a database and run `database.sql` to make all the tables required.
 Fill in app/config/config.php with constants to initialize the website.
-.
-It also. has user related features:.
+
+It also has user related features:
 	Register;
 	Login;
 	Logout;
