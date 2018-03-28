@@ -47,7 +47,7 @@ class Users extends Controller {
 		}
 
 		// loading the login view
-		$this->view('login', $this->data);
+		$this->view('users/login', $this->data);
 	}
 
 	public function register() {
@@ -128,7 +128,7 @@ class Users extends Controller {
 		}
 
 		// loading the registration view
-		$this->view('register', $this->data);
+		$this->view('users/register', $this->data);
 	}
 
 	public function logout() {
@@ -222,7 +222,7 @@ class Users extends Controller {
 		}
 
 		// loading the view to change password
-		$this->view('change_password', $this->data);
+		$this->view('users/change_password', $this->data);
 	}
 
 	public function forgot() {
@@ -287,7 +287,7 @@ class Users extends Controller {
 		}
 
 		// loading the view
-		$this->view('forgot_password', $this->data);
+		$this->view('users/forgot_password', $this->data);
 	}
 
 	public function reset($param) {
@@ -345,7 +345,7 @@ class Users extends Controller {
 				}
 
 				// loading the view to reset password
-				$this->view('reset_password', $this->data);
+				$this->view('users/reset_password', $this->data);
 
 			} else {
 				die('Invalid URL');
@@ -405,7 +405,7 @@ class Users extends Controller {
 
 		// loading the view
 		$this->data['otp'] = true;
-		$this->view('login', $this->data);
+		$this->view('users/login', $this->data);
 	}
 
 	public function verifyOTP($phone) {
@@ -454,7 +454,7 @@ class Users extends Controller {
 
 				// loading the view
 				$this->data['phone'] = $phone;
-				$this->view('verify_otp', $this->data);
+				$this->view('users/verify_otp', $this->data);
 
 			} else {
 				die('Invalid URL');
