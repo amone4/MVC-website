@@ -34,28 +34,29 @@ class Messages {
 	 * method to pop out all messages
 	 */
 	public function pop() {
-		for ($key = 0; $key < $this->top; $key++)
+		for ($key = 0; $key < $this->top; $key++) {
 
-			if ($this->nodes[$key]->messageType) echo '
-				<div class="alert alert-success in" role="alert" id="alert_success'.$key.'">
-					<button type="button" class="close" onclick="document.getElementById(\'alert_success'.$key.'\').hidden = true;">
+			if ($this->nodes[$key]->messageType === 0) $type = 'success';
+			else if ($this->nodes[$key]->messageType === 1) $type = 'primary';
+			else $type = 'danger';
+
+
+			echo '
+				<div class="alert alert-' . $type . ' in" role="alert" id="alert_' . $type . $key . '">
+					<button type="button" class="close" onclick="document.getElementById(\'alert_' . $type . $key . '\').hidden = true;">
 						<span aria-hidden="true">&times;</span>
 						<span class="sr-only">Close</span>
 					</button>
-					<strong>Success!</strong> '.$this->nodes[$key]->message.'.
+					<strong>';
+
+			if ($this->nodes[$key]->messageType === 0) echo 'Success!';
+			else if ($this->nodes[$key]->messageType === 1) echo 'Information:';
+			else echo 'Warning!';
+
+			echo '</strong> ' . $this->nodes[$key]->message . '.
 				</div>
 			';
-
-			else echo '
-				<div class="alert alert-danger in" role="alert" id="alert_danger'.$key.'">
-					<button type="button" class="close" onclick="document.getElementById(\'alert_danger'.$key.'\').hidden = true;">
-						<span aria-hidden="true">&times;</span>
-						<span class="sr-only">Close</span>
-					</button>
-					<strong>Warning!</strong> '.$this->nodes[$key]->message.'.
-				</div>
-			';
-
+		}
 		$this->top = 0;
 	}
 }
@@ -63,11 +64,15 @@ class Messages {
 $_SESSION['control_message_handler'] = new Messages();
 
 function enqueueErrorMessage($message) {
-	$_SESSION['control_message_handler']->push($message, false);
+	$_SESSION['control_message_handler']->push($message, 2);
+}
+
+function enqueueInformation($message) {
+	$_SESSION['control_message_handler']->push($message, 1);
 }
 
 function enqueueSuccessMessage($message) {
-	$_SESSION['control_message_handler']->push($message, true);
+	$_SESSION['control_message_handler']->push($message, 0);
 }
 
 function dequeMessages() {
