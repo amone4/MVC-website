@@ -15,6 +15,19 @@
 		endforeach;?>];
 	</script>
 
+	<div class="container" id="doctorSearch">
+		<div class="row">
+			<form action="<?php echo URLROOT; ?>/doctors/search/" method="GET" class="col-12 btn-group">
+				<input type="text" class="form-control" name="search" placeholder="Enter name of the Doctor">
+				<button><i class="fas fa-search"></i></button>
+			</form>
+		</div>
+	</div>
+
+	<div class="container">
+		<?php dequeMessages(); ?>
+	</div>
+
 	<div class="container" id="doctors"></div>
 
 	<div aria-label="Doctor navigation">

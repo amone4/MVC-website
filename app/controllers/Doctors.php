@@ -20,15 +20,17 @@ class Doctors extends Controller {
 	}
 
 	public function search() {
+		$data = [];
 		if (isset($_GET['search']) && !empty($_GET['search'])) {
 			$name = filter_var($_GET['search'], FILTER_SANITIZE_STRING);
 			if (ctype_alpha($name)) {
-				$this->view('doctors', $this->doctor->search(strtolower($name)));
+				$data = $this->doctor->search(strtolower($name));
 			} else {
-				redirect('');
+				enqueueErrorMessage('Enter a valid name to search');
 			}
 		} else {
-			redirect('');
+			enqueueErrorMessage('Enter a valid name to search');
 		}
+		$this->view('doctors', $data);
 	}
 }

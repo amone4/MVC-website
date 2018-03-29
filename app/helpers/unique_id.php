@@ -83,7 +83,7 @@
  *
  * @param mixed   $in	  String or long input to translate
  * @param boolean $to_num  Reverses translation when true
- * @param mixed   $pad_up  Number or boolean padds the result up to a specified length
+ * @param mixed   $pad_up  Number or boolean pads the result up to a specified length
  * @param string  $pass_key Supplying a password makes it harder to calculate the original ID
  *
  * @return mixed string or long
@@ -150,4 +150,26 @@ function alphaID($in, $to_num = false, $pad_up = false, $pass_key = null) {
 	}
 
 	return $out;
+}
+
+/**
+ * function uses alphaID to encrypt string of numbers to string of alphanumeric
+ * @param string            $string string to be encrypted
+ * @param bool or number    $pad    number of pads
+ *
+ * @return mixed    result of encryption
+ */
+function encryptAlpha($string, $pad = false) {
+	return alphaID($string, false, $pad, PASS);
+}
+
+/**
+ * function uses alphaID to decrypt string of alphanumeric to string of numbers
+ * @param string            $string string to be decrypted
+ * @param bool or number    $pad    number of pads
+ *
+ * @return mixed    result of decryption
+ */
+function decryptAlpha($string, $pad = false) {
+	return alphaID($string, true, $pad, PASS);
 }

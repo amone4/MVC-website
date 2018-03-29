@@ -11,7 +11,7 @@
 
 				<div class="field">
 					<label for="email">Email</label>
-					<input type="email" class="form-control" name="email" id="email">
+					<input required type="email" class="form-control" name="email" id="email">
 				</div>
 				<input type="submit" name="submit" id="submit" value="Submit" class="form-control btn btn-danger"><br><br>
 			</form>

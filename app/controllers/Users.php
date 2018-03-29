@@ -88,7 +88,7 @@ class Users extends Controller {
 
 										// generating a confirmation code
 										$code = rand(10000, 99999) . '' . $sno . '' . rand(10000, 99999);
-										$code = alphaID($code, false, false, PASS);
+										$code = encryptAlpha($code);
 
 										// preparing the email message
 										$message = 'Click on the following link to confirm your email. <br>' . URLROOT . '/users/confirm_email/' . $code;
@@ -147,7 +147,7 @@ class Users extends Controller {
 		if (preg_match('%^[A-Za-z0-9]+$%', $param)) {
 
 			// retrieving the serial number from the code
-			$sno = substr(substr(number_format(alphaID($param, true, false, PASS), 0, '', ''), 5), 0, -5);
+			$sno = substr(substr(number_format(decryptAlpha($param), 0, '', ''), 5), 0, -5);
 
 			// checking if serial number exists
 			if ($this->user->serialNumberExists($sno)) {
@@ -253,7 +253,7 @@ class Users extends Controller {
 						} catch (Exception $e) {
 							$code = rand(10000, 99999) . '' . $sno . '' . rand(10000, 99999);
 						}
-						$code = alphaID($code, false, false, PASS);
+						$code = encryptAlpha($code);
 
 						// storing the code in the database
 						if ($this->user->storeResetCode($sno, $code)) {
@@ -302,7 +302,7 @@ class Users extends Controller {
 		if (preg_match('%^[A-Za-z0-9]+$%', $param)) {
 
 			// retrieving the serial number from the code
-			$sno = substr(substr(number_format(alphaID($param, true, false, PASS), 0, '', ''), 5), 0, -5);
+			$sno = substr(substr(number_format(decryptAlpha($param), 0, '', ''), 5), 0, -5);
 
 			// checking if the code is valid
 			if ($this->user->verifyResetCode($sno, $param)) {
@@ -383,7 +383,7 @@ class Users extends Controller {
 							// sending the otp
 							if (sendOTP(['phone' => $p['phone'], 'otp' => $otp])) {
 
-								redirect('users/verifyOTP/' . $p['phone']);
+								redirect('users/verifyOTP/' . encryptAlpha($p['phone']));
 
 							// error messages
 							} else {
@@ -412,6 +412,9 @@ class Users extends Controller {
 		if (validateLogin()) {
 			redirect('');
 		}
+
+		// decrypting the phone number in URL
+		$phone = decryptAlpha($phone);
 
 		// validating phone number
 		if (validatePhone($phone)) {
@@ -456,6 +459,7 @@ class Users extends Controller {
 				$this->data['phone'] = $phone;
 				$this->view('users/verify_otp', $this->data);
 
+			// error messages
 			} else {
 				die('Invalid URL');
 			}

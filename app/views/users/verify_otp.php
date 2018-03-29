@@ -15,7 +15,7 @@
 				</div>
 				<div class="field">
 					<label for="otp">Enter OTP</label>
-					<input type="text" class="form-control" name="otp" id="otp">
+					<input required type="text" class="form-control" name="otp" id="otp">
 				</div>
 				<input type="submit" name="submit" id="submit" value="Submit" class="form-control btn btn-danger"><br><br>
 			</form>

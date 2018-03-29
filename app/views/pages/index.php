@@ -7,13 +7,7 @@
 			<div class="row d-inline">
 				<h1>A one-liner relevant to the website</h1>
 			</div>
-			<div onclick="$('#intro')
-			.slideUp('slow')
-			.fadeOut('fast', function() {
-				$('#search')
-				.slideUp('slow')
-				.fadeIn();
-			});" class="displayToggle">
+			<div class="displayToggle" id="downButton">
 				<h4>Search for Doctor<br><i class="fa fa-angle-down"></i></h4>
 			</div>
 		</div>
@@ -21,13 +15,7 @@
 
 	<div id="search" class="m-auto col-lg-6 col-md-8 col-sm-10 col-12">
 		<div class="container-fluid">
-			<div onclick="$('#search')
-			.slideDown('slow')
-			.fadeOut('fast', function() {
-				$('#intro')
-				.slideDown('slow')
-				.fadeIn();
-			});" class="displayToggle">
+			<div class="displayToggle" id="upButton">
 				<h4><i class="fa fa-angle-up"></i></h4>
 			</div>
 			<div class="row">
@@ -45,22 +33,6 @@
 		</div>
 	</div>
 
-	<script>
-		// function to set the top padding
-		function setTopPadding() {
-			var containerHeight = $(window).height() - $('nav').height() - $('footer').height();
-			$('#intro').css('padding-top', (containerHeight - $('#intro').height()) / 2.5);
-			$('#search').css('padding-top', (containerHeight - $('#search').height()) / 2.75);
-		}
-		// set top padding on load
-		$(function() {
-			setTopPadding();
-			$('#intro').removeClass('invisible');
-		});
-		// set top padding on resize
-		$(window).resize(function() {
-			setTopPadding()
-		});
-	</script>
+	<script src="<?php echo URLROOT; ?>/js/index.js"></script>
 
 <?php require_once APPROOT . '/views/inc/footer.php'; ?>

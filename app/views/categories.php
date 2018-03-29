@@ -5,11 +5,11 @@
 	<script type="application/javascript">
 		const city = <?php echo $data['city']; ?>;
 		const allCategories = [<?php foreach ($data['categories'] as $category) :
-		echo "{
-			sno: '$category->sno',
-			category: '$category->name',
-			photo: '$category->photo'
-		},";
+			echo "{
+				sno: '$category->sno',
+				category: '$category->name',
+				photo: '$category->photo'
+			},";
 		endforeach; ?>];
 		var categories = allCategories;
 	</script>

@@ -11,17 +11,17 @@
 				<button class="btn btn-sm btn-outline-success form-control" id="otpLogin">Use OTP</button>
 			</div>
 
-			<form method="post" id="passLoginForm" action="<?php echo URLROOT; ?>/users" class="col-sm-10 offset-sm-1 card-body small">
+			<?php dequeMessages(); ?>
 
-				<?php dequeMessages(); ?>
+			<form method="post" id="passLoginForm" action="<?php echo URLROOT; ?>/users" class="col-sm-10 offset-sm-1 card-body small">
 
 				<div class="field">
 					<label for="email">Email</label>
-					<input type="email" name="email" class="form-control" id="email">
+					<input required type="email" name="email" class="form-control" id="email">
 				</div>
 				<div class="field">
 					<label for="password">Password</label>
-					<input type="password" name="password" class="form-control" id="password">
+					<input required type="password" name="password" class="form-control" id="password">
 				</div>
 				<input type="submit" name="submit" value="Login" class="form-control btn btn-success"><br><br>
 				<div class="col-md-8 offset-md-2 text-center">
@@ -32,11 +32,9 @@
 
 			<form method="post" id="otpLoginForm" action="<?php echo URLROOT; ?>/users/createOTP" class="col-sm-10 offset-sm-1 card-body small">
 
-				<?php dequeMessages(); ?>
-
 				<div class="field">
 					<label for="phone">Phone Number</label>
-					<input type="number" max="9999999999" min="1000000000" name="phone" class="form-control" id="phone">
+					<input required type="number" max="9999999999" min="1000000000" name="phone" class="form-control" id="phone">
 				</div>
 				<input type="submit" name="submit" value="Send OTP" class="form-control btn btn-success"><br><br>
 				<div class="col-md-8 offset-md-2 text-center">

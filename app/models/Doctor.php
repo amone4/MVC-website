@@ -15,7 +15,10 @@ class Doctor {
 										ORDER BY doctors.name');
 		$this->database->bind('city', $city, PDO::PARAM_INT);
 		$this->database->bind('category', $category, PDO::PARAM_INT);
-		return $this->database->resultSet();
+		$set = $this->database->resultSet();
+		if ($this->database->rowCount() === 0)
+			enqueueErrorMessage('No results found');
+		return $set;
 	}
 
 	public function search($name) {
@@ -26,6 +29,9 @@ class Doctor {
 										AND doctors.category = categories.sno
 										ORDER BY doctors.name');
 		$this->database->bind('name', '%' . $name . '%', PDO::PARAM_STR);
-		return $this->database->resultSet();
+		$set = $this->database->resultSet();
+		if ($this->database->rowCount() === 0)
+			enqueueErrorMessage('No results found');
+		return $set;
 	}
 }

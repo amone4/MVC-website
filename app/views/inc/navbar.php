@@ -1,6 +1,6 @@
 	<nav class="container-fluid fixed-top">
 		<div>
-			<a id="brand" href="<?php echo URLROOT;?>"><?php echo SITENAME; ?></a>
+			<a id="brand" class="d-none" href="<?php echo URLROOT;?>"><?php echo SITENAME; ?></a>
 			<a id="showOptions" class="float-right optionsToggle"><span class="fa fa-user"></span></a>
 			<a id="hideOptions" class="float-right optionsToggle"><span class="fa fa-times"></span></a>
 		</div>

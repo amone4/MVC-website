@@ -1,19 +1,29 @@
+// adjusting font size in navbar
+adjustFontSize('nav #brand', {min: 20, max: 35});
+adjustFontSize('#options a', {min: 10, max: 17.5});
+
 $(function() {
-	$('#hideOptions').hide();
-	$('#showOptions').show();
-	$('#options').hide();
+	$('nav #brand').removeClass('d-none');
 });
 
-$('#showOptions').click(function() {
-	$('#showOptions').hide();
-	$('#options').slideDown().show();
-	$('#hideOptions').show();
-});
+$('#options').hide();
 
-$('#hideOptions').click(function() {
-	$('#hideOptions').hide();
-	$('#options').slideUp(function() {
-		$('#options').hide()
-	});
-	$('#showOptions').show();
-});
+$('#showOptions')
+	.show()
+	.click(function() {
+		$('#showOptions').hide();
+		$('#options').slideDown().show();
+		$('#hideOptions').show();
+	})
+;
+
+$('#hideOptions')
+	.hide()
+	.click(function() {
+		$('#hideOptions').hide();
+		$('#options').slideUp(function() {
+			$('#options').hide()
+		});
+		$('#showOptions').show();
+	})
+;

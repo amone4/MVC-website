@@ -24,9 +24,6 @@ function adjustFontSize(selector, size) {
 }
 
 $(function() {
-	// adjusting font size in navbar
-	adjustFontSize('nav #brand', {min: 20, max: 35});
-	adjustFontSize('#options a', {min: 10, max: 17.5});
 	// adjusting font size for search section buttons
 	adjustFontSize('#search button', {min: 15, max: 25});
 });

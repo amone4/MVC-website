@@ -11,15 +11,15 @@
 
 				<div class="field">
 					<label for="old">Old Password</label>
-					<input type="password" class="form-control" name="old" id="old">
+					<input required type="password" class="form-control" name="old" id="old">
 				</div>
 				<div class="field">
 					<label for="new">New Password</label>
-					<input type="password" class="form-control" name="new" id="new">
+					<input required type="password" class="form-control" name="new" id="new">
 				</div>
 				<div class="field">
 					<label for="re">Re-Enter Password</label>
-					<input type="password" class="form-control" name="re" id="re">
+					<input required type="password" class="form-control" name="re" id="re">
 				</div>
 				<input type="submit" name="submit" id="submit" value="Submit" class="form-control btn btn-danger"><br><br>
 			</form>

@@ -1,8 +1,7 @@
 function refreshDoctors() {
 	var doctorsPerPage = 0;
-	if ($(document).width() > 1200) doctorsPerPage = 18;
-	else if ($(document).width() > 992) doctorsPerPage = 12;
-	else doctorsPerPage = 6;
+	if ($(document).width() < 992) doctorsPerPage = 6;
+	else doctorsPerPage = 12;
 
 	document.getElementById('tabs').innerHTML = '';
 	document.getElementById('doctors').innerHTML = '';

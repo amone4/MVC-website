@@ -14,7 +14,5 @@
 		</ul>
 	</footer>
 
-	<script type="application/javascript" src="<?php echo URLROOT; ?>/js/strings.js"></script>
-	<script type="application/javascript" src="<?php echo URLROOT; ?>/js/adjust-font.js"></script>
 </body>
 </html>
