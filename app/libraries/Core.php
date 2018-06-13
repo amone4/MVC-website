@@ -1,60 +1,61 @@
 <?php
+
+defined('_INDEX_EXEC') or die('Restricted access');
+
 /**
  * app core class
  * creates URL & loads core controller
  * URL format - /controller/method/params
  */
 class Core {
-	protected $currentController = 'Pages';
-	protected $currentMethod = 'index';
-	protected $params = [];
+	private $currentComponent = 'Pages';
+	private $currentMethod = 'index';
+	private $params = [];
 
-	public function __construct(){
-		// print_r($this->getUrl());
-
+	public function __construct() {
 		$url = $this->getUrl();
 
-		// look in controllers for first value
-		if(file_exists('../app/controllers/' . ucwords($url[0]). '.php')){
-			// ff exists, set as controller
-			$this->currentController = ucwords($url[0]);
-			// unset 0 Index
+		if (isset($url[0]) && !empty($url[0])) {
+			$componentPath = APPROOT . '/components/' . $url[0];
+			$this->currentComponent = ucwords($url[0]);
 			unset($url[0]);
+		} else {
+			$componentPath = APPROOT . '/components/pages';
+			$this->currentComponent = 'Pages';
 		}
 
+		if (!file_exists($componentPath . '/' . $this->currentComponent . '.php'))
+			Misc::generateErrorPage();
+
 		// require the controller
-		require_once '../app/controllers/'. $this->currentController . '.php';
+		require_once $componentPath . '/' . $this->currentComponent . '.php';
 
 		// instantiate controller class
-		$this->currentController = new $this->currentController;
+		$controller = new $this->currentComponent;
 
 		// check for second part of url
-		if(isset($url[1])){
-			// check to see if method exists in controller
-			if(method_exists($this->currentController, $url[1])){
+		if (isset($url[1])) {
+			if ($url[1] != 'dispatchMethod') {
 				$this->currentMethod = $url[1];
-				// unset 1 index
 				unset($url[1]);
-			}
+			} else Misc::generateErrorPage();
 		}
 
 		// get params
 		$this->params = $url ? array_values($url) : [];
 
-		// call a callback with array of params
-		try {
-			call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
-		} catch (ArgumentCountError $e) {
-			die('Invalid URL');
-		}
+		// dispatch the method
+		$controller->dispatchMethod($this->currentMethod, $this->params);
 	}
 
-	public function getUrl(){
-		if(isset($_GET['url'])){
+	// function to convert URL into array
+	private function getUrl() {
+		if (isset($_GET['url'])) {
 			$url = rtrim($_GET['url'], '/');
 			$url = filter_var($url, FILTER_SANITIZE_URL);
 			$url = explode('/', $url);
 			return $url;
 		}
+		return null;
 	}
 }
