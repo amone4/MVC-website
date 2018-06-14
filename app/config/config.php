@@ -3,23 +3,23 @@
 defined('_INDEX_EXEC') or die('Restricted access');
 
 // DB params
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'talkitout');
+define('DB_HOST', '__DB_HOSTNAME__');
+define('DB_USER', '__DB_USERNAME__');
+define('DB_PASS', '__DB_PASSWORD__');
+define('DB_NAME', '__DB_NAME__');
 
 // app root
 define('APPROOT', dirname(dirname(__FILE__)));
 // URL root
-define('URLROOT', 'http://localhost/talkitout');
+define('URLROOT', '__URL_OF_WEBSITE__');
 // site name
-define('SITENAME', 'Talk it Out!');
+define('SITENAME', '__NAME_OF_WEBSITE__');
 
 // password to be used for alphaID function
-define('ALPHA_PASS', 'rootByDefault');
+define('ALPHA_PASS', '__CIPHER_KEY__');
 
 // email address to send mails
-define('SENDING_EMAIL_ID', 'noreply@example.com');
+define('SENDING_EMAIL_ID', '__EMAIL_ID__');
 
 // API key for sending messages
-define('OTP_API_KEY', '86cda628-23bc-11e8-a895-0200cd936042');
+define('OTP_API_KEY', '__OTP_SENDING_KEY__');
