@@ -22,15 +22,15 @@ Views for each component are kept in its `views` folder. Common `header` and `fo
 <h3>Agendas</h3>
 <ul>
 	<li>
-		<h5>Handling forms</h5>
+		<h4>Handling forms</h4>
 		It is too cumbersome to type down markup for rendering each form. Similarly, typing down validations for all form fields seems too redundant. A simple solution would be to create a `forms.json`, with details of all forms for a component, and only calling `renderForm()` and `validateForm()` methods to do the necessary tasks.<br>
 	</li>
 	<li>
-		<h5>Command-line interface</h5>
+		<h4>Command-line interface</h4>
 		Already, remembering the nuances of using this framework seems a difficult task. An ideal way to avoid mistakes would be to have a command-line interface, and type down just the commands to perform basic, but error-prone tasks<br>
 	</li>
 	<li>
-		<h5>Uniform view and JSON output rendering</h5>
+		<h4>Uniform view and JSON output rendering</h4>
 		This idea is still under development. Currently, JSON output for APIs has to be handled very differently as compared to HTML output. The idea is to make this uniform, with the back-end sending JSON data, API controller sending it to the caller, and Web controller rendering HTML<br>
 	</li>
 </ul>
