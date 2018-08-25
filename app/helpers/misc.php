@@ -9,8 +9,8 @@ class Misc {
 		die();
 	}
 
-	public static function validateLogin($type) {
-		return ($type === 0 && isset($_SESSION['user']) && !empty($_SESSION['user'])) || ($type === 1 && isset($_SESSION['psychologist']) && !empty($_SESSION['psychologist'])) || ($type === 2 && isset($_SESSION['admin']) && !empty($_SESSION['admin']));
+	public static function validateLogin() {
+		return isset($_SESSION['user']) && !empty($_SESSION['user']);
 	}
 
 	public static function generateErrorPage($message = 'Invalid URL') {

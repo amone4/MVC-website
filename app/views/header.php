@@ -7,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<script src="<?php echo URLROOT; ?>/vendor/jquery/jquery-3.3.1.min.js"></script>
-	<script src="<?php echo URLROOT; ?>/vendor/popper.js/dist/umd/popper.min.js"></script>
 	<link rel="stylesheet" href="<?php echo URLROOT; ?>/vendor/bootstrap/css/bootstrap.min.css">
 	<script src="<?php echo URLROOT; ?>/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="<?php echo URLROOT; ?>/vendor/fontawesome/css/fontawesome-all.min.css">
@@ -17,7 +16,4 @@
 	<title><?php echo SITENAME; ?></title>
 </head>
 <body>
-
-<?php require_once 'navbar.php'; ?>
-
-	<div id="container">
+	<script>const rootURL = '<?php echo URLROOT; ?>';</script>

@@ -27,6 +27,10 @@ class Validations {
 		return preg_match('%^[1-9]{1}[0-9]{9}$%', $input);
 	}
 
+	public static function number($input) {
+		return ctype_digit($input);
+	}
+
 	public static function password($input) {
 		return preg_match('%[A-z0-9\.\-\_\@\&]%', $input);
 	}

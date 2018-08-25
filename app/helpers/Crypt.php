@@ -4,12 +4,12 @@ defined('_INDEX_EXEC') or die('Restricted access');
 
 class Crypt {
 
-	public static function encryptBlowfish($input, $key) {
-		return openssl_encrypt($input, 'bf-cbc', $key);
+	public static function encryptBlowfish($input, $key = ALPHA_PASS) {
+		return @openssl_encrypt($input, 'bf-cbc', $key);
 	}
 
-	public static function decryptBlowfish($input, $key) {
-		return openssl_decrypt($input, 'bf-cbc', $key);
+	public static function decryptBlowfish($input, $key = ALPHA_PASS) {
+		return @openssl_decrypt($input, 'bf-cbc', $key);
 	}
 
 	public static function encryptAlpha($string, $pad = false) {

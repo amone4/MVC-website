@@ -3,16 +3,16 @@
 defined('_INDEX_EXEC') or die('Restricted access');
 
 class Users extends Controller {
-	protected $user;
+	protected $model;
 
 	public function __construct() {
 		$this->component = 'Users';
-		$this->user = $this->model();
-		parent::__construct();
+		$this->model = $this->getModel();
 	}
 
 	public function index() {
-		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
-		$this->view('dashboard');
+		if (!Misc::validateLogin())
+			$this->dispatchMethod('logout');
+		$this->renderView('dashboard');
 	}
 }

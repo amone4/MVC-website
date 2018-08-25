@@ -45,7 +45,11 @@ class Core {
 		$this->params = $url ? array_values($url) : [];
 
 		// dispatch the method
-		$controller->dispatchMethod($this->currentMethod, $this->params);
+		try {
+			$controller->dispatchMethod($this->currentMethod, $this->params);
+		} catch (ArgumentCountError $e) {
+			Misc::generateErrorPage();
+		}
 	}
 
 	// function to convert URL into array

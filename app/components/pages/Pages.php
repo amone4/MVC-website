@@ -6,10 +6,9 @@ class Pages extends Controller {
 
 	public function __construct() {
 		$this->component = 'Pages';
-		parent::__construct();
 	}
 
 	public function index() {
-		$this->view('home');
+		$this->renderView('home');
 	}
 }

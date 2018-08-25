@@ -33,14 +33,14 @@ class Register extends Users {
 									if ($p['password'] === $p['confirmPassword']) {
 										$p['name'] = strtolower($p['name']);
 										// if the email has already been registered
-										$this->user->selectWhere(['email' => $p['email']]);
-										if ($this->user->rowCount() === 0) {
+										$this->model->selectWhere(['email' => $p['email']]);
+										if ($this->model->rowCount() === 0) {
 											// if the username has already been registered
-											$this->user->selectWhere(['username' => $p['username']]);
-											if ($this->user->rowCount() === 0) {
+											$this->model->selectWhere(['username' => $p['username']]);
+											if ($this->model->rowCount() === 0) {
 
 												// generating confirmation code for email
-												$p['code'] = Crypt::encryptAlpha($this->user->getNewID(), 6);
+												$p['code'] = Crypt::encryptAlpha($this->model->getNewID(), 6);
 												// mailing the confirmation code
 												$message = '<p>Confirm your email by clicking on the link below<br><a href="' . URLROOT . '/users/confirm/email/' . $p['code'] . '">Confirm email</a></p>';
 												if (Misc::writeMessage($message, 'code.txt') || mail($p['email'], 'Confirm your email', $message, 'From: noreply@example.com' . "\r\n")) {
@@ -49,7 +49,7 @@ class Register extends Users {
 													$p['password'] = password_hash($p['password'], PASSWORD_DEFAULT);
 													unset($p['confirmPassword']);
 													$p['code_sent_on'] = time();
-													if ($this->user->insert($p)) {
+													if ($this->model->insert($p)) {
 
 														Messages::success('You have been successfully registered. Confirm your email, and login again');
 														Misc::redirect('users');
@@ -68,6 +68,6 @@ class Register extends Users {
 			} else Messages::error('Please enter valid details in all form fields');
 		}
 
-		$this->view('register');
+		$this->renderView('register');
 	}
 }

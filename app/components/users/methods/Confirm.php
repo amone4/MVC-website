@@ -23,12 +23,12 @@ class Confirm extends Users {
 		// validating code and fetching ID
 		$code = filter_var($code, FILTER_SANITIZE_STRING);
 		$id = Crypt::decryptAlpha($code, 6);
-		$row = $this->user->select($id);
+		$row = $this->model->select($id);
 
-		if ($this->user->rowCount() === 1) {
+		if ($this->model->rowCount() === 1) {
 			if (($row->code === $code) && (time() - $row->code_sent_on < 864000)) {
 				// confirming email
-				if ($this->user->update($id, ['confirm_email' => 1, 'code' => '0'])) {
+				if ($this->model->update($id, ['confirm_email' => 1, 'code' => '0'])) {
 
 					Messages::success('Your email has been confirmed successfully. Login to proceed');
 					Misc::redirect('users');
@@ -45,7 +45,7 @@ class Confirm extends Users {
 		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
 
 		// checking if phone verification is needed
-		$user = $this->user->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
 			Messages::info('Your phone number has already been verified');
 			Misc::redirect();
@@ -62,7 +62,7 @@ class Confirm extends Users {
 				if (ctype_digit($p['otp'])) {
 					if (($p['otp'] == $user->otp) && (time() - $user->otp_sent_on < 864000)) {
 						// confirming phone number
-						if ($this->user->update($user->id, ['confirm_phone' => 1, 'otp' => '0'])) {
+						if ($this->model->update($user->id, ['confirm_phone' => 1, 'otp' => '0'])) {
 
 							Messages::success('Your phone number was successfully confirmed');
 							Misc::redirect('users');
@@ -74,6 +74,6 @@ class Confirm extends Users {
 			} else Messages::error('Please enter valid details in all form fields');
 		}
 
-		$this->view('confirm_phone');
+		$this->renderView('confirm_phone');
 	}
 }

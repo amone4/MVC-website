@@ -18,7 +18,7 @@ class Send extends Users {
 		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
 
 		// checking if phone verification is needed
-		$user = $this->user->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
 			Messages::info('Your phone number has already been verified');
 			Misc::redirect('users');
@@ -30,7 +30,7 @@ class Send extends Users {
 		$otp = substr($otp + $user->id, 0, 4);
 
 		// storing OTP
-		if ($this->user->update($user->id, ['otp' => $otp, 'otp_sent_on' => time()])) {
+		if ($this->model->update($user->id, ['otp' => $otp, 'otp_sent_on' => time()])) {
 			// sending OTP
 			if (Misc::writeMessage($user->phone . ': ' . $otp, 'otp.txt') || Misc::sendOTP(['phone' => $user->phone, 'otp' => $otp])) {
 
@@ -47,7 +47,7 @@ class Send extends Users {
 		// checking if the user is logged in
 		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
 
-		$user = $this->user->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 
 		// checking if phone verification is needed
 		if ($user->confirm_email == 1) {
@@ -61,7 +61,7 @@ class Send extends Users {
 		$message = '<p>Confirm your email by clicking on the link below<br><a href="' . URLROOT . '/users/confirm/email/' . $code . '">Confirm email</a></p>';
 
 		// storing code
-		if ($this->user->update($user->id, ['code' => $code, 'code_sent_on' => time()])) {
+		if ($this->model->update($user->id, ['code' => $code, 'code_sent_on' => time()])) {
 			// sending code
 			if (Misc::writeMessage($message, 'code.txt') || mail($user->email, 'Confirm your email', $message, 'From: noreply@example.com' . "\r\n")) {
 

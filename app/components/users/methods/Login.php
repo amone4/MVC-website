@@ -24,7 +24,7 @@ class Login extends Users {
 					// validating password
 					if (Validations::password($p['password'])) {
 						// checking if username exists
-						if (($row = $this->user->selectWhere(['username' => $p['username']])) && $this->user->rowCount() === 1) {
+						if (($row = $this->model->selectWhere(['username' => $p['username']])) && $this->model->rowCount() === 1) {
 							// verifying if the password is correct
 							if (password_verify($p['password'], $row->password)) {
 
@@ -41,6 +41,6 @@ class Login extends Users {
 			} else Messages::error('Please enter valid details in all form fields');
 		}
 
-		$this->view('login');
+		$this->renderView('login');
 	}
 }
