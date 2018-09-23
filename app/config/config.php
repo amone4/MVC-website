@@ -15,8 +15,8 @@ define('URLROOT', '__URL_OF_WEBSITE__');
 // site name
 define('SITENAME', '__NAME_OF_WEBSITE__');
 
-// password to be used for alphaID function
-define('ALPHA_PASS', '__CIPHER_KEY__');
+// application specific password to be used for encryption-decryption
+define('PASS', '__CIPHER_KEY__');
 
 // email address to send mails
 define('SENDING_EMAIL_ID', '__EMAIL_ID__');

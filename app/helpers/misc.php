@@ -39,7 +39,7 @@ class Misc {
 						if (move_uploaded_file($_FILES[$tag]["tmp_name"], $target_file)) {
 							return true;
 
-						// error messages
+							// error messages
 						} else $error = 'There was an error uploading your file';
 					} else {
 						$error = 'The allowed formats are ';
