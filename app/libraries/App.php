@@ -1,5 +1,7 @@
 <?php
 
+defined('_INDEX_EXEC') or die('Restricted access');
+
 class App {
 	private static $data;
 
@@ -13,6 +15,9 @@ class App {
 			'component' => $data['component'],
 			'isAPIRequest' => $data['isAPIRequest']
 		];
+
+		// getting any set session variables from API request
+		Session::create();
 
 		// dispatching method called in request
 		App::dispatchMethod($data['method'], $data['params']);
@@ -122,5 +127,6 @@ class App {
 	// function to deny API request for specific components
 	public static function denyAPIAccess() {
 		App::$data['isAPIRequest'] = false;
+		Session::destroy();
 	}
 }

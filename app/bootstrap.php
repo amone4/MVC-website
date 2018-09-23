@@ -18,4 +18,5 @@ require_once 'helpers/Misc.php';
 require_once 'helpers/Crypt.php';
 require_once 'helpers/Forms.php';
 require_once 'helpers/Messages.php';
+require_once 'helpers/Session.php';
 require_once 'helpers/Validations.php';

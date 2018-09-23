@@ -21,6 +21,8 @@ A component method, when called from URL, can either be in the definition of the
 
 Views for each component are kept in its `views` folder. Common `header` and `footer` are kept in `app/views` folder, and automatically get included for all views, if component specific files aren't found in the views folder within that component. `navbar.php`, if found, too gets included automatically after header. The content of the main view, is kept in a `div` with id `container`<br>
 
+Sessions between your app and web will be exchanged automatically. This can be achieved by passing your app's session variables as an array in `$_POST['session']`; and updating your session variables according to `session` array in the output<br>
+
 <h3>Agendas</h3>
 <ul>
 	<li>

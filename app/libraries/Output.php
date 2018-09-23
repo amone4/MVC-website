@@ -18,6 +18,11 @@ class Output {
 		];
 	}
 
+	public static function session($data) {
+		if (App::get('isAPIRequest'))
+			Output::$output['session'] = $data;
+	}
+
 	// function to set view
 	public static function view($view, $data = null) {
 		Output::$output['view'] = $view;
@@ -58,7 +63,11 @@ class Output {
 	public static function fatal($message = 'Invalid URL') {
 		if (App::get('isAPIRequest'))
 			Output::renderJSON(['fatal' => $message]);
-		else require_once APPROOT . '/views/message.php';
+		else {
+			require_once APPROOT . '/views/message.php';
+			Session::destroy();
+			die();
+		}
 	}
 
 	// function to redirect or instruct to redirect
@@ -87,6 +96,7 @@ class Output {
 
 		if ($output['redirect']['valid']) {
 			header('Location: ' . URLROOT . '/' . $output['redirect']['link']);
+			Session::destroy();
 			die();
 		}
 
@@ -112,6 +122,7 @@ class Output {
 				else require_once APPROOT . '/views/footer.php';
 			} else Output::fatal('View does not exists');
 		}
+		Session::destroy();
 		die();
 	}
 
@@ -126,6 +137,7 @@ class Output {
 				$output['view'] = App::get('component') . '/' . $view[0];
 		}
 		echo json_encode($output);
+		Session::destroy();
 		die();
 	}
 }
