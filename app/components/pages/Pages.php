@@ -2,13 +2,9 @@
 
 defined('_INDEX_EXEC') or die('Restricted access');
 
-class Pages extends Controller {
-
-	public function __construct() {
-		$this->component = 'Pages';
-	}
+class Pages extends ComponentController {
 
 	public function index() {
-		$this->renderView('home');
+		OutputController::view('home');
 	}
 }

@@ -7,8 +7,8 @@ class Logout extends Users {
 	public function __construct() {
 		parent::__construct();
 
-		if (Misc::validateLogin()) Messages::success('You have been successfully logged out');
+		if (Misc::validateLogin()) OutputController::success('You have been successfully logged out');
 		if (isset($_SESSION['user'])) unset($_SESSION['user']);
-		Misc::redirect('users/login');
+		OutputController::redirect('users/login');
 	}
 }

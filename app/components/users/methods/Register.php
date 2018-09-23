@@ -9,8 +9,8 @@ class Register extends Users {
 
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			Messages::info('You can\'t register, because you\'re logged in');
-			$this->dispatchMethod('logout');
+			OutputController::info('You can\'t register, because you\'re logged in');
+			App::dispatchMethod('logout');
 		}
 
 		// checking if the form is submitted
@@ -51,23 +51,23 @@ class Register extends Users {
 													$p['code_sent_on'] = time();
 													if ($this->model->insert($p)) {
 
-														Messages::success('You have been successfully registered. Confirm your email, and login again');
-														Misc::redirect('users');
+														OutputController::success('You have been successfully registered. Confirm your email, and login again');
+														OutputController::redirect('users');
 
-														// error messages
-													} else Messages::error('Some error occurred while registering you. Try again to register');
-												} else Messages::error('Some error occurred while registering you. Try again to register');
-											} else Messages::error('Username has already been registered');
-										} else Messages::error('Email has already been registered');
-									} else Messages::error('Password don\'t match');
-								} else Messages::error('Invalid name');
-							} else Messages::error('Invalid phone number');
-						} else Messages::error('Invalid password');
-					} else Messages::error('Invalid username');
-				} else Messages::error('Invalid email');
-			} else Messages::error('Please enter valid details in all form fields');
+													// error messages
+													} else OutputController::error('Some error occurred while registering you. Try again to register');
+												} else OutputController::error('Some error occurred while registering you. Try again to register');
+											} else OutputController::error('Username has already been registered');
+										} else OutputController::error('Email has already been registered');
+									} else OutputController::error('Password don\'t match');
+								} else OutputController::error('Invalid name');
+							} else OutputController::error('Invalid phone number');
+						} else OutputController::error('Invalid password');
+					} else OutputController::error('Invalid username');
+				} else OutputController::error('Invalid email');
+			} else OutputController::error('Please enter valid details in all form fields');
 		}
 
-		$this->renderView('register');
+		OutputController::view('register');
 	}
 }

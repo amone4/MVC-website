@@ -4,18 +4,8 @@ defined('_INDEX_EXEC') or die('Restricted access');
 
 class Misc {
 
-	public static function redirect($location = null) {
-		header('Location: ' . URLROOT . '/' . $location);
-		die();
-	}
-
 	public static function validateLogin() {
 		return isset($_SESSION['user']) && !empty($_SESSION['user']);
-	}
-
-	public static function generateErrorPage($message = 'Invalid URL') {
-		require_once APPROOT . '/views/message.php';
-		die();
 	}
 
 	/**

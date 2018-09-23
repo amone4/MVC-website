@@ -6,7 +6,7 @@ class User extends Model {
 
 	public function __construct() {
 		parent::__construct();
-		$this->tableName = 'Users';
+		$this->tableName = 'users';
 	}
 
 	public function getNewID() {

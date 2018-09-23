@@ -70,7 +70,8 @@ class Forms {
 	 * @param $component string name of the component
 	 * @return object JSON else null
 	 */
-	private static function getForm($form, $component) {
+	private static function getForm($form, $component = null) {
+		if ($component === null) $component = App::get('component');
 		$filePath = APPROOT . '/components/' . $component . '/forms.json';
 		if (file_exists($filePath)) {
 			$file = trim(file_get_contents($filePath));
@@ -122,7 +123,8 @@ class Forms {
 	 * @param $component string name of the component
 	 * @return array|bool form data after validation
 	 */
-	public static function validate($form, $component) {
+	public static function validate($form, $component = null) {
+		if ($component === null) $component = App::get('component');
 		$form = self::getForm($form, $component);
 		$data = [];
 		if ($form) {
@@ -152,13 +154,15 @@ class Forms {
 	 * @param $form string name of the form
 	 * @param $component string name of the component
 	 */
-	public static function render($form, $component) {
+	public static function render($form, $component = null) {
+		if ($component === null) $component = App::get('component');
 		$form = self::getForm($form, $component);
 		if ($form) {
 			$action = URLROOT . $form->action;
 			$method = (isset($form->method) && strtolower($form->method) === 'get') ? 'GET' : 'POST';
 			$class = (isset($form->class) && !empty($form->class) ? $form->class : '');
 			$id = (isset($form->id) && !empty($form->id) ? $form->id : '');
+			$labels = (isset($form->labels) && !empty($form->labels) ? $form->labels : false);
 			echo '<form action="' . $action . '" method="' . $method . '" class="' . $class . '" id="' . $id . '">';
 			echo '<fieldSet>';
 			$submitButtonAdded = false;
@@ -167,22 +171,23 @@ class Forms {
 					echo '<div class="field">';
 					$name = $field->name;
 					$class = (isset($field->class) && !empty($field->class) ? $field->class : '');
-					$id = (isset($field->id) && !empty($field->id) ? $field->id : $field->name);
+					$id = (isset($field->id) && !empty($field->id) ? $field->id : $form->name.'-'.$field->name);
 					$label = (isset($field->label) && !empty($field->label) ? $field->label : ucwords($field->name));
 					$type = self::getInputType($field->type);
 					$placeholder = (isset($field->placeholder) && !empty($field->placeholder) ? $field->placeholder : 'Enter ' . $label);
-					echo '<label for="' . $id . '">' . $label . '</label>';
+					if($labels) echo '<label for="' . $id . '">' . $label . '</label>';
 					echo '<input' . (isset($field->required) ? ' required' : '') . ' type="' . $type . '" name="' . $name . '" id="' . $id . '" class="' . $class . '" placeholder="' . $placeholder . '">';
 					echo '</div><br>';
 				} else {
 					$submitButtonAdded = true;
 					$class = (isset($field->class) && !empty($field->class) ? $field->class : '');
+					$value = (isset($field->value) && !empty($field->value) ? ucwords($field->value) : 'Submit');
 					$id = (isset($field->id) && !empty($field->id) ? $field->id : 'submit');
-					echo '<input type="submit" name="submit" id="'.$id.'" value="Submit" class="'.$class.'"><br><br>';
+					echo '<input type="submit" name="submit" id="'.$id.'" value="'.$value.'" class="'.$class.'"><br><br>';
 				}
 			}
 			if (!$submitButtonAdded)
-				echo '<input type="submit" name="submit" id="submit" value="Submit"><br>';
+				echo '<input type="submit" name="submit" id="submit" value="'.ucwords($form->name).'"><br>';
 			echo '</fieldSet>';
 			echo '</form>';
 		}

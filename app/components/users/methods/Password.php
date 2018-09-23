@@ -10,13 +10,13 @@ class Password extends Users {
 		if ($request === 'forgot') $this->passwordForgot();
 		else if ($request === 'reset' && $code !== null) $this->passwordReset($code);
 		else if ($request === 'change') $this->passwordChange();
-		else Misc::generateErrorPage();
+		else OutputController::fatal();
 	}
 
 	// function for forgot password
 	private function passwordForgot() {
 		// checking if the user is logged in
-		if (Misc::validateLogin()) Misc::redirect();
+		if (Misc::validateLogin()) OutputController::redirect();
 
 		// checking if the form was submitted
 		if (Forms::isSubmitted()) {
@@ -36,26 +36,26 @@ class Password extends Users {
 							// updating the confirmation code
 							if ($this->model->update($row->id, ['code' => $code, 'code_sent_on' => time()])) {
 
-								Messages::success('Link to reset the password was successfully sent.');
-								Misc::redirect('users');
+								OutputController::success('Link to reset the password was successfully sent.');
+								OutputController::redirect('users');
 
-								// error messages
-							} else Messages::error('Some error occurred. Try again');
-						} else Messages::error('Some error occurred while sending the mail. Try again');
-					} else Messages::error('This email is not registered');
-				} else Messages::error('Invalid email');
-			} else Messages::error('Please enter valid details in all form fields');
+							// error messages
+							} else OutputController::error('Some error occurred. Try again');
+						} else OutputController::error('Some error occurred while sending the mail. Try again');
+					} else OutputController::error('This email is not registered');
+				} else OutputController::error('Invalid email');
+			} else OutputController::error('Please enter valid details in all form fields');
 		}
 
-		$this->renderView('password_forgot');
+		OutputController::view('password_forgot');
 	}
 
 	// function to reset password
 	private function passwordReset($code) {
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			Messages::info('You can\'t reset your password, because you\'re logged in');
-			$this->dispatchMethod('logout');
+			OutputController::info('You can\'t reset your password, because you\'re logged in');
+			App::dispatchMethod('logout');
 		}
 
 		// validating code and fetching ID
@@ -77,26 +77,26 @@ class Password extends Users {
 								$p['password'] = password_hash($p['password'], PASSWORD_DEFAULT);
 								if ($this->model->update($id, ['code' => '0', 'password' => $p['password']])) {
 
-									Messages::success('Your password has been successfully reset. Login to proceed');
-									Misc::redirect('users');
+									OutputController::success('Your password has been successfully reset. Login to proceed');
+									OutputController::redirect('users');
 
-									// error messages
-								} else Messages::error('Some error occurred while resetting your password. Try again');
-							} else Messages::error('Passwords don\'t match');
-						} else Messages::error('Invalid password');
-					} else Messages::error('Please enter valid details in all form fields');
+								// error messages
+								} else OutputController::error('Some error occurred while resetting your password. Try again');
+							} else OutputController::error('Passwords don\'t match');
+						} else OutputController::error('Invalid password');
+					} else OutputController::error('Please enter valid details in all form fields');
 				}
 
-				$this->renderView('password_reset', $code);
+				OutputController::view('password_reset', $code);
 
-			} else Misc::generateErrorPage();
-		} else Misc::generateErrorPage();
+			} else OutputController::fatal();
+		} else OutputController::fatal();
 	}
 
 	// function to change password
 	private function passwordChange() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
+		if (!Misc::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if the form has been submitted
 		if (Forms::isSubmitted()) {
@@ -115,17 +115,17 @@ class Password extends Users {
 							$p['newPassword'] = password_hash($p['newPassword'], PASSWORD_DEFAULT);
 							if ($this->model->update($user->id, ['password' => $p['newPassword']])) {
 
-								Messages::success('Your password has been successfully changed. Login again to continue');
-								$this->dispatchMethod('logout');
+								OutputController::success('Your password has been successfully changed. Login again to continue');
+								App::dispatchMethod('logout');
 
-								// error messages
-							} else Messages::error('Some error occurred while changing your password');
-						} else Messages::error('Old password is incorrect');
-					} else Messages::error('Passwords don\'t match');
-				} else Messages::error('Invalid password');
-			} else Messages::error('Please enter valid details in all form fields');
+							// error messages
+							} else OutputController::error('Some error occurred while changing your password');
+						} else OutputController::error('Old password is incorrect');
+					} else OutputController::error('Passwords don\'t match');
+				} else OutputController::error('Invalid password');
+			} else OutputController::error('Please enter valid details in all form fields');
 		}
 
-		$this->renderView('password_change');
+		OutputController::view('password_change');
 	}
 }

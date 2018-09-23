@@ -9,15 +9,15 @@ class Confirm extends Users {
 
 		if ($request === 'email' && $code !== null) $this->confirmEmail($code);
 		else if ($request === 'phone') $this->confirmPhone();
-		else Misc::generateErrorPage();
+		else OutputController::fatal();
 	}
 
 	// function to confirm email
 	private function confirmEmail($code) {
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			Messages::info('You can\'t confirm your email, until you\'re logged in');
-			$this->dispatchMethod('logout');
+			OutputController::info('You can\'t confirm your email, until you\'re logged in');
+			App::dispatchMethod('logout');
 		}
 
 		// validating code and fetching ID
@@ -30,25 +30,25 @@ class Confirm extends Users {
 				// confirming email
 				if ($this->model->update($id, ['confirm_email' => 1, 'code' => '0'])) {
 
-					Messages::success('Your email has been confirmed successfully. Login to proceed');
-					Misc::redirect('users');
+					OutputController::success('Your email has been confirmed successfully. Login to proceed');
+					OutputController::redirect('users');
 
-					// error messages
-				} else Misc::generateErrorPage('Some error occurred while confirming your email. Try again');
-			} else Misc::generateErrorPage('Your code has expired');
-		} else Misc::generateErrorPage();
+				// error messages
+				} else OutputController::fatal('Some error occurred while confirming your email. Try again');
+			} else OutputController::fatal('Your code has expired');
+		} else OutputController::fatal();
 	}
 
 	// function to confirm phone number
 	private function confirmPhone() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
+		if (!Misc::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if phone verification is needed
 		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
-			Messages::info('Your phone number has already been verified');
-			Misc::redirect();
+			OutputController::info('Your phone number has already been verified');
+			OutputController::redirect();
 		}
 
 		// checking if the form has been submitted
@@ -64,16 +64,16 @@ class Confirm extends Users {
 						// confirming phone number
 						if ($this->model->update($user->id, ['confirm_phone' => 1, 'otp' => '0'])) {
 
-							Messages::success('Your phone number was successfully confirmed');
-							Misc::redirect('users');
+							OutputController::success('Your phone number was successfully confirmed');
+							OutputController::redirect('users');
 
-							// error messages
-						} else Messages::error('Some error occurred while confirming your phone number. Try again');
-					} else Messages::error('Invalid OTP');
-				} else Messages::error('Invalid OTP');
-			} else Messages::error('Please enter valid details in all form fields');
+						// error messages
+						} else OutputController::error('Some error occurred while confirming your phone number. Try again');
+					} else OutputController::error('Invalid OTP');
+				} else OutputController::error('Invalid OTP');
+			} else OutputController::error('Please enter valid details in all form fields');
 		}
 
-		$this->renderView('confirm_phone');
+		OutputController::view('confirm_phone');
 	}
 }

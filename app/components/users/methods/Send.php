@@ -9,19 +9,19 @@ class Send extends Users {
 
 		if ($request === 'otp') $this->sendOTP();
 		elseif ($request === 'code') $this->sendCode();
-		else Misc::generateErrorPage();
+		else OutputController::fatal();
 	}
 
 	// function to send OTP for confirming the phone number
 	private function sendOTP() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
+		if (!Misc::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if phone verification is needed
 		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
-			Messages::info('Your phone number has already been verified');
-			Misc::redirect('users');
+			OutputController::info('Your phone number has already been verified');
+			OutputController::redirect('users');
 		}
 
 		// generating otp
@@ -34,25 +34,25 @@ class Send extends Users {
 			// sending OTP
 			if (Misc::writeMessage($user->phone . ': ' . $otp, 'otp.txt') || Misc::sendOTP(['phone' => $user->phone, 'otp' => $otp])) {
 
-				Messages::success('OTP was successfully sent to your registered phone number');
-				Misc::redirect('users/confirm/phone');
+				OutputController::success('OTP was successfully sent to your registered phone number');
+				OutputController::redirect('users/confirm/phone');
 
-				// error messages
-			} else Misc::generateErrorPage('Some error occurred while sending the OTP. Try again');
-		} else Misc::generateErrorPage('Some error occurred while storing your OTP. Try again');
+			// error messages
+			} else OutputController::fatal('Some error occurred while sending the OTP. Try again');
+		} else OutputController::fatal('Some error occurred while storing your OTP. Try again');
 	}
 
 	// function to send confirmation code for confirming the email
 	private function sendCode() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) $this->dispatchMethod('logout');
+		if (!Misc::validateLogin()) App::dispatchMethod('logout');
 
 		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 
 		// checking if phone verification is needed
 		if ($user->confirm_email == 1) {
-			Messages::error('Your email has already been verified');
-			Misc::redirect('users');
+			OutputController::error('Your email has already been verified');
+			OutputController::redirect('users');
 		}
 
 		// generating code
@@ -65,11 +65,11 @@ class Send extends Users {
 			// sending code
 			if (Misc::writeMessage($message, 'code.txt') || mail($user->email, 'Confirm your email', $message, 'From: noreply@example.com' . "\r\n")) {
 
-				Messages::success('Confirmation code was successfully sent to your registered email');
-				Misc::redirect('users');
+				OutputController::success('Confirmation code was successfully sent to your registered email');
+				OutputController::redirect('users');
 
-				// error messages
-			} else Misc::generateErrorPage('Some error occurred while sending the confirmation code. Try again');
-		} else Misc::generateErrorPage('Some error occurred while storing your confirmation code. Try again');
+			// error messages
+			} else OutputController::fatal('Some error occurred while sending the confirmation code. Try again');
+		} else OutputController::fatal('Some error occurred while storing your confirmation code. Try again');
 	}
 }

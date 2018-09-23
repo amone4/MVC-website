@@ -2,8 +2,7 @@
 
 defined('_INDEX_EXEC') or die('Restricted access');
 
-// root model class
-class Model {
+abstract class Model {
 	protected $database;
 	protected $tableName;
 	protected $primaryKey;
