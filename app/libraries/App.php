@@ -118,4 +118,9 @@ class App {
 			Output::fatal();
 		}
 	}
+
+	// function to deny API request for specific components
+	public static function denyAPIAccess() {
+		App::$data['isAPIRequest'] = false;
+	}
 }
