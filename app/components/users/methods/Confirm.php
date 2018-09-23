@@ -9,14 +9,14 @@ class Confirm extends Users {
 
 		if ($request === 'email' && $code !== null) $this->confirmEmail($code);
 		else if ($request === 'phone') $this->confirmPhone();
-		else OutputController::fatal();
+		else Output::fatal();
 	}
 
 	// function to confirm email
 	private function confirmEmail($code) {
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			OutputController::info('You can\'t confirm your email, until you\'re logged in');
+			Output::info('You can\'t confirm your email, until you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
@@ -30,13 +30,13 @@ class Confirm extends Users {
 				// confirming email
 				if ($this->model->update($id, ['confirm_email' => 1, 'code' => '0'])) {
 
-					OutputController::success('Your email has been confirmed successfully. Login to proceed');
-					OutputController::redirect('users');
+					Output::success('Your email has been confirmed successfully. Login to proceed');
+					Output::redirect('users');
 
 				// error messages
-				} else OutputController::fatal('Some error occurred while confirming your email. Try again');
-			} else OutputController::fatal('Your code has expired');
-		} else OutputController::fatal();
+				} else Output::fatal('Some error occurred while confirming your email. Try again');
+			} else Output::fatal('Your code has expired');
+		} else Output::fatal();
 	}
 
 	// function to confirm phone number
@@ -47,8 +47,8 @@ class Confirm extends Users {
 		// checking if phone verification is needed
 		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
-			OutputController::info('Your phone number has already been verified');
-			OutputController::redirect();
+			Output::info('Your phone number has already been verified');
+			Output::redirect();
 		}
 
 		// checking if the form has been submitted
@@ -64,16 +64,16 @@ class Confirm extends Users {
 						// confirming phone number
 						if ($this->model->update($user->id, ['confirm_phone' => 1, 'otp' => '0'])) {
 
-							OutputController::success('Your phone number was successfully confirmed');
-							OutputController::redirect('users');
+							Output::success('Your phone number was successfully confirmed');
+							Output::redirect('users');
 
 						// error messages
-						} else OutputController::error('Some error occurred while confirming your phone number. Try again');
-					} else OutputController::error('Invalid OTP');
-				} else OutputController::error('Invalid OTP');
-			} else OutputController::error('Please enter valid details in all form fields');
+						} else Output::error('Some error occurred while confirming your phone number. Try again');
+					} else Output::error('Invalid OTP');
+				} else Output::error('Invalid OTP');
+			} else Output::error('Please enter valid details in all form fields');
 		}
 
-		OutputController::view('confirm_phone');
+		Output::view('confirm_phone');
 	}
 }

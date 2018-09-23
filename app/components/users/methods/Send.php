@@ -9,7 +9,7 @@ class Send extends Users {
 
 		if ($request === 'otp') $this->sendOTP();
 		elseif ($request === 'code') $this->sendCode();
-		else OutputController::fatal();
+		else Output::fatal();
 	}
 
 	// function to send OTP for confirming the phone number
@@ -20,8 +20,8 @@ class Send extends Users {
 		// checking if phone verification is needed
 		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
 		if ($user->confirm_phone == 1) {
-			OutputController::info('Your phone number has already been verified');
-			OutputController::redirect('users');
+			Output::info('Your phone number has already been verified');
+			Output::redirect('users');
 		}
 
 		// generating otp
@@ -34,12 +34,12 @@ class Send extends Users {
 			// sending OTP
 			if (Misc::writeMessage($user->phone . ': ' . $otp, 'otp.txt') || Misc::sendOTP(['phone' => $user->phone, 'otp' => $otp])) {
 
-				OutputController::success('OTP was successfully sent to your registered phone number');
-				OutputController::redirect('users/confirm/phone');
+				Output::success('OTP was successfully sent to your registered phone number');
+				Output::redirect('users/confirm/phone');
 
 			// error messages
-			} else OutputController::fatal('Some error occurred while sending the OTP. Try again');
-		} else OutputController::fatal('Some error occurred while storing your OTP. Try again');
+			} else Output::fatal('Some error occurred while sending the OTP. Try again');
+		} else Output::fatal('Some error occurred while storing your OTP. Try again');
 	}
 
 	// function to send confirmation code for confirming the email
@@ -51,8 +51,8 @@ class Send extends Users {
 
 		// checking if phone verification is needed
 		if ($user->confirm_email == 1) {
-			OutputController::error('Your email has already been verified');
-			OutputController::redirect('users');
+			Output::error('Your email has already been verified');
+			Output::redirect('users');
 		}
 
 		// generating code
@@ -65,11 +65,11 @@ class Send extends Users {
 			// sending code
 			if (Misc::writeMessage($message, 'code.txt') || mail($user->email, 'Confirm your email', $message, 'From: noreply@example.com' . "\r\n")) {
 
-				OutputController::success('Confirmation code was successfully sent to your registered email');
-				OutputController::redirect('users');
+				Output::success('Confirmation code was successfully sent to your registered email');
+				Output::redirect('users');
 
 			// error messages
-			} else OutputController::fatal('Some error occurred while sending the confirmation code. Try again');
-		} else OutputController::fatal('Some error occurred while storing your confirmation code. Try again');
+			} else Output::fatal('Some error occurred while sending the confirmation code. Try again');
+		} else Output::fatal('Some error occurred while storing your confirmation code. Try again');
 	}
 }

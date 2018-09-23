@@ -2,9 +2,9 @@
 
 defined('_INDEX_EXEC') or die('Restricted access');
 
-class Pages extends ComponentController {
+class Pages extends Controller {
 
 	public function index() {
-		OutputController::view('home');
+		Output::view('home');
 	}
 }

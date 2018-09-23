@@ -9,11 +9,11 @@ The project is divided into `app` and `public` folders. The root `.htaccess`, di
 
 `app/bootstrap.php` includes all files, that are necessary for the app to work. This includes `config/config.php` which includes all constants; all helpers; and all libraries<br>
 
-`libraries/App.php` is the app's centre. It manages all global variables. It firstly calls in the `libraries/RequestController`. It then dispatches the method called, and initiates output rendering<br>
+`libraries/App.php` is the app's centre. It manages all global variables. It firstly processes the request to determine the component, method, and parameters. Request is assumed to be in the form of `component/[method/[params]]`. It also determines if the request is from an API. API requests have the same URL, but begin with `api/`. It then dispatches the method called, and initiates output rendering<br>
 
-`libraries/RequestController.php` determines the component, and method being requested for. It also determines any parameters which might have been passed<br>
+`libraries/Output.php` manages all output. It keeps on accumulating the processing output. At the end, its render method is called, which generates HTML or JSON output, based on the request<br>
 
-Each component has at least one controller. All of them extend `libraries/ComponentController.php`, which provides `getModel()` to each controller<br>
+Each component has at least one controller. All of them extend `libraries/Controller.php`, which provides `getModel()` to each controller<br>
 
 A component interacts with the database through its model. Each model extends `libraries/Model.php`, which provides the functions for basic CRUD functionality. `libraries/Database.php` takes care of the nuances for using PDO. A model can be accessed using `getModel()` / `getModel('User')` / `getModel('users/User')`. Note that each model should begin by defining the table name<br>
 

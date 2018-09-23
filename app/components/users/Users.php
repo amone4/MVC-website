@@ -2,7 +2,7 @@
 
 defined('_INDEX_EXEC') or die('Restricted access');
 
-class Users extends ComponentController {
+class Users extends Controller {
 	protected $model;
 
 	public function __construct() {
@@ -12,6 +12,6 @@ class Users extends ComponentController {
 	public function index() {
 		if (!Misc::validateLogin())
 			App::dispatchMethod('logout');
-		OutputController::view('dashboard');
+		Output::view('dashboard');
 	}
 }

@@ -9,7 +9,7 @@ class Login extends Users {
 
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			OutputController::info('You can\'t login, because you\'re logged in');
+			Output::info('You can\'t login, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
@@ -30,17 +30,17 @@ class Login extends Users {
 
 								// encrypting and storing the session
 								$_SESSION['user'] = Crypt::encryptAlpha($row->id, 6);
-								OutputController::success('You have been successfully logged in');
-								OutputController::redirect('users');
+								Output::success('You have been successfully logged in');
+								Output::redirect('users');
 
 							// error messages
-							} else OutputController::error('Invalid credentials');
-						} else OutputController::error('Invalid credentials');
-					} else OutputController::error('Invalid password');
-				} else OutputController::error('Invalid username');
-			} else OutputController::error('Please enter valid details in all form fields');
+							} else Output::error('Invalid credentials');
+						} else Output::error('Invalid credentials');
+					} else Output::error('Invalid password');
+				} else Output::error('Invalid username');
+			} else Output::error('Please enter valid details in all form fields');
 		}
 
-		OutputController::view('login');
+		Output::view('login');
 	}
 }

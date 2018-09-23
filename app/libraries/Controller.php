@@ -2,7 +2,7 @@
 
 defined('_INDEX_EXEC') or die('Restricted access');
 
-abstract class ComponentController {
+abstract class Controller {
 
 	protected function getModel($model = null){
 		if (!$model)
@@ -21,6 +21,6 @@ abstract class ComponentController {
 			require_once $componentModelPath . $model[0] . '.php';
 			return new $model[0]();
 
-		} else OutputController::fatal('Model does not exist');
+		} else Output::fatal('Model does not exist');
 	}
 }
