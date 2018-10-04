@@ -21,6 +21,6 @@ abstract class Controller {
 			require_once $componentModelPath . $model[0] . '.php';
 			return new $model[0]();
 
-		} else Output::fatal('Model does not exist');
+		} else Response::fatal('Model does not exist');
 	}
 }

@@ -75,7 +75,7 @@ class App {
 		} else $componentPath = APPROOT . '/components/pages';
 
 		if (!file_exists($componentPath . '/' . $request['component'] . '.php'))
-			Output::fatal();
+			Response::fatal();
 
 		// require the controller
 		require_once $componentPath . '/' . $request['component'] . '.php';
@@ -99,7 +99,7 @@ class App {
 			$controller = App::$data['component'];
 			$controller = new $controller;
 			if (method_exists($controller, $func)) {
-				if (!is_callable([$controller, $func])) Output::fatal();
+				if (!is_callable([$controller, $func])) Response::fatal();
 				else call_user_func_array([$controller, $func], $params);
 
 			// method within methods folder of that component
@@ -112,15 +112,15 @@ class App {
 					$reflect->newInstanceArgs($params);
 
 				// method not found
-				} else Output::fatal('Method does not exist');
+				} else Response::fatal('Method does not exist');
 			}
 
 			// rendering output after processing
-			Output::render();
+			Response::render();
 
 		// invalid parameters
 		} catch (ArgumentCountError $e) {
-			Output::fatal();
+			Response::fatal();
 		}
 	}
 

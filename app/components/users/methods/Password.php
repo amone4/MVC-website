@@ -10,13 +10,13 @@ class Password extends Users {
 		if ($request === 'forgot') $this->passwordForgot();
 		else if ($request === 'reset' && $code !== null) $this->passwordReset($code);
 		else if ($request === 'change') $this->passwordChange();
-		else Output::fatal();
+		else Response::fatal();
 	}
 
 	// function for forgot password
 	private function passwordForgot() {
 		// checking if the user is logged in
-		if (Misc::validateLogin()) Output::redirect();
+		if (Misc::validateLogin()) Response::redirect();
 
 		// checking if the form was submitted
 		if (Forms::isSubmitted()) {
@@ -36,25 +36,25 @@ class Password extends Users {
 							// updating the confirmation code
 							if ($this->model->update($row->id, ['code' => $code, 'code_sent_on' => time()])) {
 
-								Output::success('Link to reset the password was successfully sent.');
-								Output::redirect('users');
+								Response::success('Link to reset the password was successfully sent.');
+								Response::redirect('users');
 
 							// error messages
-							} else Output::error('Some error occurred. Try again');
-						} else Output::error('Some error occurred while sending the mail. Try again');
-					} else Output::error('This email is not registered');
-				} else Output::error('Invalid email');
-			} else Output::error('Please enter valid details in all form fields');
+							} else Response::error('Some error occurred. Try again');
+						} else Response::error('Some error occurred while sending the mail. Try again');
+					} else Response::error('This email is not registered');
+				} else Response::error('Invalid email');
+			} else Response::error('Please enter valid details in all form fields');
 		}
 
-		Output::view('password_forgot');
+		Response::view('password_forgot');
 	}
 
 	// function to reset password
 	private function passwordReset($code) {
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			Output::info('You can\'t reset your password, because you\'re logged in');
+			Response::info('You can\'t reset your password, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
@@ -77,20 +77,20 @@ class Password extends Users {
 								$p['password'] = password_hash($p['password'], PASSWORD_DEFAULT);
 								if ($this->model->update($id, ['code' => '0', 'password' => $p['password']])) {
 
-									Output::success('Your password has been successfully reset. Login to proceed');
-									Output::redirect('users');
+									Response::success('Your password has been successfully reset. Login to proceed');
+									Response::redirect('users');
 
 								// error messages
-								} else Output::error('Some error occurred while resetting your password. Try again');
-							} else Output::error('Passwords don\'t match');
-						} else Output::error('Invalid password');
-					} else Output::error('Please enter valid details in all form fields');
+								} else Response::error('Some error occurred while resetting your password. Try again');
+							} else Response::error('Passwords don\'t match');
+						} else Response::error('Invalid password');
+					} else Response::error('Please enter valid details in all form fields');
 				}
 
-				Output::view('password_reset', $code);
+				Response::view('password_reset', $code);
 
-			} else Output::fatal();
-		} else Output::fatal();
+			} else Response::fatal();
+		} else Response::fatal();
 	}
 
 	// function to change password
@@ -115,17 +115,17 @@ class Password extends Users {
 							$p['newPassword'] = password_hash($p['newPassword'], PASSWORD_DEFAULT);
 							if ($this->model->update($user->id, ['password' => $p['newPassword']])) {
 
-								Output::success('Your password has been successfully changed. Login again to continue');
+								Response::success('Your password has been successfully changed. Login again to continue');
 								App::dispatchMethod('logout');
 
 							// error messages
-							} else Output::error('Some error occurred while changing your password');
-						} else Output::error('Old password is incorrect');
-					} else Output::error('Passwords don\'t match');
-				} else Output::error('Invalid password');
-			} else Output::error('Please enter valid details in all form fields');
+							} else Response::error('Some error occurred while changing your password');
+						} else Response::error('Old password is incorrect');
+					} else Response::error('Passwords don\'t match');
+				} else Response::error('Invalid password');
+			} else Response::error('Please enter valid details in all form fields');
 		}
 
-		Output::view('password_change');
+		Response::view('password_change');
 	}
 }

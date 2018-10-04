@@ -12,6 +12,6 @@ class Users extends Controller {
 	public function index() {
 		if (!Misc::validateLogin())
 			App::dispatchMethod('logout');
-		Output::view('dashboard');
+		Response::view('dashboard');
 	}
 }

@@ -11,7 +11,7 @@ The project is divided into `app` and `public` folders. The root `.htaccess`, di
 
 `libraries/App.php` is the app's centre. It manages all global variables. It firstly processes the request to determine the component, method, and parameters. Request is assumed to be in the form of `component/[method/[params]]`. It also determines if the request is from an API. API requests have the same URL, but begin with `api/`. It then dispatches the method called, and initiates output rendering<br>
 
-`libraries/Output.php` manages all output. It keeps on accumulating the processing output. At the end, its render method is called, which generates HTML or JSON output, based on the request<br>
+`libraries/Response.php` manages all output. It keeps on accumulating the processing output. At the end, its render method is called, which generates HTML or JSON output, based on the request<br>
 
 Each component has at least one controller. All of them extend `libraries/Controller.php`, which provides `getModel()` to each controller<br>
 
@@ -25,6 +25,10 @@ Sessions between your app and web will be exchanged automatically. This can be a
 
 <h3>Agendas</h3>
 <ul>
+	<li>
+		<h4>Improving Model class</h4>
+		There are some limitations to the existing Model class, which every model inherits, like - Not being able to handle compound primary keys, limiting where clause to only equals operator. These need improvements
+	</li>
 	<li>
 		<h4>Handling forms</h4>
 		It is too cumbersome to type down markup for rendering each form. Similarly, typing down validations for all form fields seems too redundant. A simple solution would be to create a `forms.json`, with details of all forms for a component, and only calling `renderForm()` and `validateForm()` methods to do the necessary tasks.<br>

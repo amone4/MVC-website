@@ -9,7 +9,7 @@ class Register extends Users {
 
 		// checking if the user is logged in
 		if (Misc::validateLogin()) {
-			Output::info('You can\'t register, because you\'re logged in');
+			Response::info('You can\'t register, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
@@ -51,23 +51,23 @@ class Register extends Users {
 													$p['code_sent_on'] = time();
 													if ($this->model->insert($p)) {
 
-														Output::success('You have been successfully registered. Confirm your email, and login again');
-														Output::redirect('users');
+														Response::success('You have been successfully registered. Confirm your email, and login again');
+														Response::redirect('users');
 
 													// error messages
-													} else Output::error('Some error occurred while registering you. Try again to register');
-												} else Output::error('Some error occurred while registering you. Try again to register');
-											} else Output::error('Username has already been registered');
-										} else Output::error('Email has already been registered');
-									} else Output::error('Password don\'t match');
-								} else Output::error('Invalid name');
-							} else Output::error('Invalid phone number');
-						} else Output::error('Invalid password');
-					} else Output::error('Invalid username');
-				} else Output::error('Invalid email');
-			} else Output::error('Please enter valid details in all form fields');
+													} else Response::error('Some error occurred while registering you. Try again to register');
+												} else Response::error('Some error occurred while registering you. Try again to register');
+											} else Response::error('Username has already been registered');
+										} else Response::error('Email has already been registered');
+									} else Response::error('Password don\'t match');
+								} else Response::error('Invalid name');
+							} else Response::error('Invalid phone number');
+						} else Response::error('Invalid password');
+					} else Response::error('Invalid username');
+				} else Response::error('Invalid email');
+			} else Response::error('Please enter valid details in all form fields');
 		}
 
-		Output::view('register');
+		Response::view('register');
 	}
 }

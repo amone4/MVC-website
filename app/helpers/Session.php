@@ -24,7 +24,7 @@ class Session {
 				$data[$key] = $value;
 				unset($_SESSION[$key]);
 			}
-			Output::session($data);
+			Response::session($data);
 		} else
 			foreach (Session::$vars as $key)
 				if (isset($_SESSION[$key]))
