@@ -124,9 +124,14 @@ class App {
 		}
 	}
 
-	// function to deny API request for specific components
+	// function to deny API request
 	public static function denyAPIAccess() {
 		App::$data['isAPIRequest'] = false;
 		Session::destroy();
+	}
+
+	// function to allow only API request
+	public static function allowOnlyAPIAccess() {
+		App::$data['isAPIRequest'] = true;
 	}
 }

@@ -61,9 +61,10 @@ class Response {
 
 	// function to terminate processing, and display a fatal error
 	public static function fatal($message = 'Invalid URL') {
-		if (App::get('isAPIRequest'))
-			Response::renderJSON(['fatal' => $message]);
-		else {
+		if (App::get('isAPIRequest')) {
+			Response::$response = ['fatal' => $message];
+			Response::renderJSON();
+		} else {
 			require_once APPROOT . '/views/message.php';
 			Session::destroy();
 			die();
@@ -84,9 +85,9 @@ class Response {
 	// function to start final rendering of output
 	public static function render() {
 		if (App::get('isAPIRequest'))
-			Response::renderJSON(Response::$response);
+			Response::renderJSON();
 		else
-			Response::renderHTML(Response::$response);
+			Response::renderHTML();
 	}
 
 	// function to render HTML output
@@ -134,8 +135,8 @@ class Response {
 			else
 				Response::$response['view'] = App::get('component') . '/' . $view[0];
 		}
-		echo json_encode(Response::$response);
 		Session::destroy();
+		echo json_encode(Response::$response);
 		die();
 	}
 }
