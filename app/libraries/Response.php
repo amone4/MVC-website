@@ -107,7 +107,7 @@ class Response {
 			if (isset(Response::$response['view'][1])) {
 				$componentViewsPath .= Response::$response['view'][0] . '/views/';
 				unset(Response::$response['view'][0]);
-			} else $componentViewsPath .= App::get('component') . '/views/';
+			} else $componentViewsPath .= strtolower(App::get('component')) . '/views/';
 			$data = Response::$response['data'];
 			if (file_exists($componentViewsPath . Response::$response['view'][0] .  '.php')) {
 				if (file_exists($componentViewsPath . 'header.php'))
@@ -119,7 +119,7 @@ class Response {
 				if (file_exists($componentViewsPath . 'footer.php'))
 					require_once $componentViewsPath . 'footer.php';
 				else require_once APPROOT . '/views/footer.php';
-			} else Response::fatal('View does not exists');
+			} else Response::fatal('View does not exist');
 		}
 		Session::destroy();
 		die();
@@ -133,7 +133,7 @@ class Response {
 			if (isset($view[1]))
 				Response::$response['view'] = $view[0] . '/' . $view[1];
 			else
-				Response::$response['view'] = App::get('component') . '/' . $view[0];
+				Response::$response['view'] = strtolower(App::get('component')) . '/' . $view[0];
 		}
 		Session::destroy();
 		echo json_encode(Response::$response);
