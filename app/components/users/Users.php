@@ -10,7 +10,7 @@ class Users extends Controller {
 	}
 
 	public function index() {
-		if (!Misc::validateLogin())
+		if (!LoginSessions::validateLogin())
 			App::dispatchMethod('logout');
 		Response::view('dashboard');
 	}

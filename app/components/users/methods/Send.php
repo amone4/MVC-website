@@ -15,10 +15,10 @@ class Send extends Users {
 	// function to send OTP for confirming the phone number
 	private function sendOTP() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) App::dispatchMethod('logout');
+		if (!LoginSessions::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if phone verification is needed
-		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decrypt($_SESSION['user'], true));
 		if ($user->confirm_phone == 1) {
 			Response::info('Your phone number has already been verified');
 			Response::redirect('users');
@@ -45,9 +45,9 @@ class Send extends Users {
 	// function to send confirmation code for confirming the email
 	private function sendCode() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) App::dispatchMethod('logout');
+		if (!LoginSessions::validateLogin()) App::dispatchMethod('logout');
 
-		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decrypt($_SESSION['user'], true));
 
 		// checking if phone verification is needed
 		if ($user->confirm_email == 1) {
@@ -56,7 +56,7 @@ class Send extends Users {
 		}
 
 		// generating code
-		$code = Crypt::encryptAlpha($user->id, 6);
+		$code = Crypt::encrypt($user->id, true);
 		// mailing the confirmation code
 		$message = '<p>Confirm your email by clicking on the link below<br><a href="' . URLROOT . '/users/confirm/email/' . $code . '">Confirm email</a></p>';
 

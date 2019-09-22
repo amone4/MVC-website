@@ -8,7 +8,7 @@ class Login extends Users {
 		parent::__construct();
 
 		// checking if the user is logged in
-		if (Misc::validateLogin()) {
+		if (LoginSessions::validateLogin()) {
 			Response::info('You can\'t login, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
@@ -29,7 +29,7 @@ class Login extends Users {
 							if (password_verify($p['password'], $row->password)) {
 
 								// encrypting and storing the session
-								$_SESSION['user'] = Crypt::encryptAlpha($row->id, 6);
+								LoginSessions::setLoginSession($row->id);
 								Response::success('You have been successfully logged in');
 								Response::redirect('users');
 

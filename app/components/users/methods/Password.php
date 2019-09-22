@@ -16,7 +16,7 @@ class Password extends Users {
 	// function for forgot password
 	private function passwordForgot() {
 		// checking if the user is logged in
-		if (Misc::validateLogin()) Response::redirect();
+		if (LoginSessions::validateLogin()) Response::redirect();
 
 		// checking if the form was submitted
 		if (Forms::isSubmitted()) {
@@ -29,7 +29,7 @@ class Password extends Users {
 					if (($row = $this->model->selectWhere(['email' => $p['email']])) && $this->model->rowCount() === 1) {
 
 						// generating confirmation code for email
-						$code = Crypt::encryptAlpha($row->id, 6);
+						$code = Crypt::encrypt($row->id, true);
 						// mailing the confirmation code
 						$message = '<p>Reset your password by clicking on the link below<br><a href="' . URLROOT . '/users/password/reset/' . $code . '">Reset password</a></p>';
 						if (Misc::writeMessage($message, 'code.txt') || mail($p['email'], 'Reset your password', $message, 'From: noreply@example.com' . "\r\n")) {
@@ -53,14 +53,14 @@ class Password extends Users {
 	// function to reset password
 	private function passwordReset($code) {
 		// checking if the user is logged in
-		if (Misc::validateLogin()) {
+		if (LoginSessions::validateLogin()) {
 			Response::info('You can\'t reset your password, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
 		// validating code and fetching ID
 		$code = filter_var($code, FILTER_SANITIZE_STRING);
-		$id = Crypt::decryptAlpha($code, 6);
+		$id = Crypt::decrypt($code, true);
 		if (($row = $this->model->select($id)) && $this->model->rowCount() === 1) {
 			if ($row->code === $code) {
 
@@ -96,7 +96,7 @@ class Password extends Users {
 	// function to change password
 	private function passwordChange() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) App::dispatchMethod('logout');
+		if (!LoginSessions::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if the form has been submitted
 		if (Forms::isSubmitted()) {
@@ -107,7 +107,7 @@ class Password extends Users {
 					// checking if the passwords match
 					if ($p['newPassword'] === $p['confirmPassword']) {
 
-						$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+						$user = $this->model->select(LoginSessions::getLoginSession());
 						// checking if the old password is correct
 						if (password_verify($p['oldPassword'], $user->password)) {
 

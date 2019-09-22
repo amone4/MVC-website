@@ -15,14 +15,14 @@ class Confirm extends Users {
 	// function to confirm email
 	private function confirmEmail($code) {
 		// checking if the user is logged in
-		if (Misc::validateLogin()) {
+		if (LoginSessions::validateLogin()) {
 			Response::info('You can\'t confirm your email, until you\'re logged in');
 			App::dispatchMethod('logout');
 		}
 
 		// validating code and fetching ID
 		$code = filter_var($code, FILTER_SANITIZE_STRING);
-		$id = Crypt::decryptAlpha($code, 6);
+		$id = Crypt::decrypt($code, true);
 		$row = $this->model->select($id);
 
 		if ($this->model->rowCount() === 1) {
@@ -42,10 +42,10 @@ class Confirm extends Users {
 	// function to confirm phone number
 	private function confirmPhone() {
 		// checking if the user is logged in
-		if (!Misc::validateLogin()) App::dispatchMethod('logout');
+		if (!LoginSessions::validateLogin()) App::dispatchMethod('logout');
 
 		// checking if phone verification is needed
-		$user = $this->model->select(Crypt::decryptAlpha($_SESSION['user'], 6));
+		$user = $this->model->select(Crypt::decrypt($_SESSION['user'], true));
 		if ($user->confirm_phone == 1) {
 			Response::info('Your phone number has already been verified');
 			Response::redirect();
@@ -59,7 +59,7 @@ class Confirm extends Users {
 				$p['otp'] = filter_var($p['otp'], FILTER_SANITIZE_NUMBER_INT);
 
 				// checking if the OTP is valid
-				if (ctype_digit($p['otp'])) {
+				if (Validations::number($p['otp'])) {
 					if (($p['otp'] == $user->otp) && (time() - $user->otp_sent_on < 864000)) {
 						// confirming phone number
 						if ($this->model->update($user->id, ['confirm_phone' => 1, 'otp' => '0'])) {

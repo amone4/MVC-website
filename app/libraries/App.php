@@ -19,6 +19,9 @@ class App {
 		// getting any set session variables from API request
 		Session::create();
 
+		// initializing login session class
+		LoginSessions::init();
+
 		// dispatching method called in request
 		App::dispatchMethod($data['method'], $data['params']);
 	}
@@ -96,7 +99,7 @@ class App {
 	public static function dispatchMethod($func, $params = []) {
 		try {
 			// method within controller class of that component
-			$controller = App::$data['component'];
+			$controller = strtolower(App::$data['component']);
 			$controller = new $controller;
 			if (method_exists($controller, $func)) {
 				if (!is_callable([$controller, $func])) Response::fatal();
@@ -105,7 +108,7 @@ class App {
 			// method within methods folder of that component
 			} else {
 				$func = ucwords($func);
-				$filePath = APPROOT . '/components/' . App::$data['component'] . '/methods/' . $func . '.php';
+				$filePath = APPROOT . '/components/' . strtolower(App::$data['component']) . '/methods/' . $func . '.php';
 				if (file_exists($filePath)) {
 					require_once $filePath;
 					$reflect = new ReflectionClass($func);

@@ -15,7 +15,7 @@ abstract class Controller {
 			$componentModelPath .= $model[0] . '/';
 			$model[0] = $model[1];
 			unset($model[1]);
-		} else $componentModelPath .= App::get('component') . '/';
+		} else $componentModelPath .= strtolower(App::get('component')) . '/';
 
 		if (file_exists($componentModelPath . $model[0] . '.php')) {
 			require_once $componentModelPath . $model[0] . '.php';

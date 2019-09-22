@@ -8,7 +8,7 @@ class Register extends Users {
 		parent::__construct();
 
 		// checking if the user is logged in
-		if (Misc::validateLogin()) {
+		if (LoginSessions::validateLogin()) {
 			Response::info('You can\'t register, because you\'re logged in');
 			App::dispatchMethod('logout');
 		}
@@ -40,7 +40,7 @@ class Register extends Users {
 											if ($this->model->rowCount() === 0) {
 
 												// generating confirmation code for email
-												$p['code'] = Crypt::encryptAlpha($this->model->getNewID(), 6);
+												$p['code'] = Crypt::encrypt($this->model->getNewID(), true);
 												// mailing the confirmation code
 												$message = '<p>Confirm your email by clicking on the link below<br><a href="' . URLROOT . '/users/confirm/email/' . $p['code'] . '">Confirm email</a></p>';
 												if (Misc::writeMessage($message, 'code.txt') || mail($p['email'], 'Confirm your email', $message, 'From: noreply@example.com' . "\r\n")) {

@@ -71,7 +71,7 @@ class Forms {
 	 * @return object JSON else null
 	 */
 	private static function getForm($form, $component = null) {
-		if ($component === null) $component = App::get('component');
+		if ($component === null) $component = strtolower(App::get('component'));
 		$filePath = APPROOT . '/components/' . $component . '/forms.json';
 		if (file_exists($filePath)) {
 			$file = trim(file_get_contents($filePath));
@@ -124,7 +124,6 @@ class Forms {
 	 * @return array|bool form data after validation
 	 */
 	public static function validate($form, $component = null) {
-		if ($component === null) $component = App::get('component');
 		$form = self::getForm($form, $component);
 		$data = [];
 		if ($form) {
@@ -155,7 +154,6 @@ class Forms {
 	 * @param $component string name of the component
 	 */
 	public static function render($form, $component = null) {
-		if ($component === null) $component = App::get('component');
 		$form = self::getForm($form, $component);
 		if ($form) {
 			$action = URLROOT . $form->action;

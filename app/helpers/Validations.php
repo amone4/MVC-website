@@ -11,6 +11,10 @@ class Validations {
 		return preg_match('%^[A-z\s]*$%', $input);
 	}
 
+	public static function float($input) {
+		return preg_match('%^-?[0-9]*\.?[0-9]*$%', $input);
+	}
+
 	public static function string($input) {
 		return preg_match('%^[A-z0-9]+$%', $input);
 	}

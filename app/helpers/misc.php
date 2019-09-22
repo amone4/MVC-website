@@ -4,10 +4,6 @@ defined('_INDEX_EXEC') or die('Restricted access');
 
 class Misc {
 
-	public static function validateLogin() {
-		return isset($_SESSION['user']) && !empty($_SESSION['user']);
-	}
-
 	/**
 	 * function is used to upload a file
 	 * @param  string $tag       the name of the input field that was used to upload the file
